@@ -66,23 +66,19 @@ func main() {
 
 	/* Defer */
 
-	res := make([]string, 0)
-
 	deferTest := func() {
 		defer func() {
-			res = append(res, "inside defer") // 13a
+			fmt.Println("inside defer")
 		}()
 
 		defer func() {
-			res = append(res, "inside second defer") // 13b pushed onto stack LIFO order
+			fmt.Println("inside second defer")
 		}()
 
-		res = append(res, "inside func")
+		fmt.Println("inside here")
 	}
 
 	deferTest()
-
-	fmt.Println("res = ", res)
 
 	/* errors handling
 	- no concept of exceptions

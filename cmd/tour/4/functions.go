@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	/* functions as values, first order types */
@@ -28,6 +30,7 @@ func main() {
 	type Sayer func(string) string
 
 	var helloInEmoji Sayer
+	// var helloInEmoji func(string) string
 
 	helloInEmoji = func(name string) string {
 		return name + " says ✋"
@@ -74,12 +77,23 @@ func main() {
 
 	//var someInterface SomeInterface = SomeImplementation{}
 
+	c := Coordinate{Lat: 38.1, Long: -90.0}
+	fmt.Println("c.Print() == ", c.Print())
+}
+
+type Coordinate struct {
+	Lat  float64
+	Long float64
+}
+
+func (c Coordinate) Print() string {
+	return fmt.Sprintf("%v, %v", c.Lat, c.Long) // 38.1, -90.0
 }
 
 type Greeter func(string) string
 
 func (g Greeter) Say() {
-	fmt.Println("inside Say")
+	fmt.Println(g("blah"))
 }
 
 ////////////////////////
@@ -92,19 +106,19 @@ type Person struct {
 // mixed pointer and value is not recommended
 // - this is an issue with interface types
 
-type SomeInterface interface {
-	A()
-	B()
-}
-
-type SomeImplementation struct {
-}
-
-func (s SomeImplementation) A() {
-}
-
-func (s SomeImplementation) B() {
-}
+//type SomeInterface interface {
+//	A()
+//	B()
+//}
+//
+//type SomeImplementation struct {
+//}
+//
+//func (s SomeImplementation) A() {
+//}
+//
+//func (s SomeImplementation) B() {
+//}
 
 func (p Person) FullName() string {
 	return fmt.Sprintf("%v %v", p.FirstName, p.LastName)

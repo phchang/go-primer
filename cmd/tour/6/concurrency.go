@@ -135,7 +135,7 @@ func main() {
 	//	}
 	//}
 
-	/* ## 27. mutex
+	/* mutex
 	- mutex -> mutual exclusion
 	*/
 
@@ -145,8 +145,9 @@ func main() {
 
 	var wg sync.WaitGroup
 
-	wg.Add(2)
+	wg.Add(1)
 	go func() {
+		fmt.Println("entering function 1")
 		for i := 0; i < 100; i++ {
 			mutex.Lock()
 			results = append(results, fmt.Sprintf("%v", i))
@@ -155,7 +156,9 @@ func main() {
 		wg.Done()
 	}()
 
+	wg.Add(1)
 	go func() {
+		fmt.Println("entering function 2")
 		for i := 100; i < 200; i++ {
 			mutex.Lock()
 			results = append(results, fmt.Sprintf("%v", i))

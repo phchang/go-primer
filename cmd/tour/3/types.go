@@ -182,8 +182,11 @@ func main() {
 	}
 	fmt.Println("m2 = ", m2)
 
-	var m3 []int
-	fmt.Println("is m3 nil?", m3 == nil)
+	fmt.Println("####") // iterating through a map
+	for key := range m2 {
+		fmt.Println(key)
+	}
+	fmt.Println("####")
 
 	m2["strikes"] = 2
 
@@ -204,6 +207,10 @@ func main() {
 	someFn := func() (int, error) {
 		return 0, nil
 	}
+
+	someRes, _ := someFn()
+
+	fmt.Println(someRes)
 
 	pitchCounts := 0
 	fmt.Println(pitchCounts)

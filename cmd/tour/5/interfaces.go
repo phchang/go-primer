@@ -16,6 +16,10 @@ func main() {
 		Print()
 	}
 
+	type AnotherPrinter interface {
+		Print()
+	}
+
 	var printer Printer
 
 	var myStr HyphenatedString
@@ -23,6 +27,12 @@ func main() {
 
 	myStr.Print()
 
+	var ssn SSN
+	ssn = "111223333"
+
+	ssn.Print()
+
+	printer = ssn
 	printer = myStr
 
 	fmt.Println("printing using interface method")
@@ -41,9 +51,12 @@ func main() {
 	/* type assertions */
 
 	var unknownType interface{}
-	unknownType = "some string"
+	unknownType = ssn
 
-	unknownTypeAsString := unknownType.(string)
+	unknownTypeAsString := unknownType.(SSN)
+	unknownTypeAsString.Print()
+	fmt.Printf("unknownTypeAsString type = %T\n", unknownTypeAsString)
+	fmt.Printf("unknownType type = %T\n", unknownType)
 	fmt.Println("unknownTypeAsString = ", unknownTypeAsString)
 
 	// unknownTypeAsInt := unknownType.(int) <-- this will panic
@@ -62,6 +75,9 @@ func main() {
 		fmt.Println("unknownType is an int = ", v)
 	case string:
 		fmt.Println("unknownType is a string = ", v)
+	case SSN:
+		fmt.Println("unknownType is an SSN = ", v)
+		fmt.Printf("unknownType is type <%T>\n", v)
 	default:
 		fmt.Println("unknownType is neither an int or a string")
 	}
@@ -84,6 +100,19 @@ func (p Person) FullName() string {
 
 func (p *Person) ChangeFirstName(name string) {
 	p.FirstName = name
+}
+
+type SSN string
+
+func (s SSN) String() string {
+	if len(s) == 9 {
+		return string(s[0:3] + "-" + s[3:5] + "-" + s[5:9])
+	}
+	return "not an SSN"
+}
+
+func (s SSN) Print() {
+	fmt.Println(s)
 }
 
 type HyphenatedString string
